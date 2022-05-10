@@ -5,20 +5,25 @@ public class BellmanFord {
         int[] dist = new int[n];
         for(int i=0;i<n;i++) dist[i]= Integer.MAX_VALUE;
         dist[src] = 0;
-        for(int i=0;i<n;i++){
-            for(int j=0;j<n;j++){
-                if(dist[i] + graph[i][j] <dist[j] && graph[i][j]!=0)
-                    dist[j] = dist[i] + graph[i][j];
+        for(int r=0;r<n;r++) {
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < n; j++) {
+                    if (dist[i] + graph[i][j] < dist[j] && graph[i][j]!=0)
+                        dist[j] = dist[i] + graph[i][j];
+                }
             }
         }
+        boolean flag = false;
         for(int i=0;i<n;i++){
             for(int j=0;j<n;j++){
-                if(graph[i][j]!=0 && dist[i] + graph[i][j] < dist[j] && dist[i]!=Integer.MAX_VALUE){
+                if(dist[i] + graph[i][j] < dist[j]){
                     System.out.println("NEGATIVE CYCLE DETECTED");
+                    flag = true;
                     break;
                 }
             }
         }
+        if(!flag)
             for(int i=0;i<n;i++)
                 System.out.println("Shortest Dist of "+ i + " from " + src +" = "+ dist[i]);
     }
